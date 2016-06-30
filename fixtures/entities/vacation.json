@@ -1,0 +1,24 @@
+{
+  "centerName": "Yoga Loga",
+  "centerLocation": "Mallorca",
+  "centerGettingThere": "Straight ahead",
+  "centerActivities": ["yoga","surfing"],
+  "centerEnvironment": ["mountain","lake"],
+  "hasAccommodation": true,
+
+  "vacationTitle": "Yoga Loga summer Yoga",
+  "vacationSummary": "Awesome",
+  "vacationExperience": ["advanced"],
+  "vacationSuitability": ["family"],
+  "vacationSeasonStartDate":"",
+  "vacationSeasonEndDate": "",
+  "vacationDuration": 12,
+  "vacationPeopleAmount": 20,
+  "vacationFeatures": ["foods","accommodation"],
+
+  "images": [""],
+  "video": "",
+
+  "price": 400,
+  "newsletter": true
+}

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+set -e
+
+container_name=${PROJECT_NAME}-${BUILD_VERSION}-%i
+
+if [ "$NUMBER_SERVICE_INSTANCES" != "" ] ; then
+  number_of_instances=$NUMBER_SERVICE_INSTANCES
+else
+  number_of_instances="1"
+fi
+
+cat <<EOF
+[Unit]
+Description=${PROJECT_NAME}
+
+[Service]
+User=core
+Type=simple
+Restart=on-failure
+RestartSec=5
+KillMode=none
+TimeoutStartSec=0
+TimeoutStopSec=30
+EnvironmentFile=/etc/environment
+
+ExecStartPre=/usr/bin/docker pull docker-registry.optiopay.com/${PROJECT_NAME}:${BUILD_VERSION}
+ExecStartPre=/usr/bin/bash -c ' \
+  for id in \$(docker ps --all --quiet --filter name=${PROJECT_NAME}-${BUILD_VERSION}-*); do \
+    docker rm --force \$id; \
+  done; \
+  '
+
+ExecStart=/usr/bin/docker run --rm \
+  --read-only \
+  --name ${container_name} \
+  --publish \${COREOS_PRIVATE_IPV4}::8080 \
+  docker-registry.optiopay.com/${PROJECT_NAME}:${BUILD_VERSION}
+
+ExecStop=/usr/bin/docker stop ${container_name}
+
+[X-Fleet]
+Conflicts=${PROJECT_NAME}-${BUILD_VERSION}@*.service
+EOF

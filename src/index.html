@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title><%= title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body { margin: 0; }
+    </style>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="icon" href="<%= assets_path %>/images/favicon.png" type="image/png" />
+    <link rel="icon" href="<%= assets_path %>/images/favicon.ico" type="image/x-icon" />
+  </head>
+  <body>
+    <div id="app-container">Loading scripts...</div>
+    <script type="text/javascript" src="scripts/app.js?rev=<%= revShort %>"></script>
+    <style type="text/css">
+    .notification-transition-enter {
+      opacity    : 0.01;
+      transition : opacity .5s ease-in;
+    }
+
+    .notification-transition-enter-active {
+        opacity : 1;
+    }
+
+    .notification-transition-leave {
+      opacity    : 1;
+      transition : opacity .5s ease-in;
+    }
+
+    .notification-transition-leave-active {
+        opacity : 0.01;
+    }
+
+    .notification {
+      position      : relative;
+      font          : 1rem normal Helvetica, sans-serif;
+      overflow      : hidden;
+      border-radius : 4px;
+      margin-bottom : 2px;
+      max-height    : 400px;
+      box-sizing    : border-box;
+      box-shadow    : 0 0 1px 1px rgba(10, 10, 11, .125);
+      padding       : 0.5rem;
+      color         : #fff;
+    }
+
+    .notification--success {
+      background-color: #64ce83;
+    }
+
+    .notification--info {
+      background-color: #3ea2ff;
+    }
+
+    .notification--warning {
+      background-color: #ff7f48;
+    }
+
+    .notification--danger {
+      background-color: #e74c3c;
+    }
+
+    .notification__container {
+      position  : fixed;
+      bottom     : 10px;
+      right     : 0;
+      left      : 0;
+      z-index   : 1200;
+      width     : 80%;
+      max-width : 400px;
+      margin    : auto;
+    }
+    </style>
+  </body>
+</html>
