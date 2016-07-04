@@ -4,7 +4,6 @@
   "description": "GUI to onboard clients (CRUD)",
   "main": "/src/app.js",
   "scripts": {
-    "postinstall": "gulp release --env production --dest production",
     "start": "gulp dev",
     "test": "echo \"Error: no test specified\""
   },
@@ -40,14 +39,16 @@
   },
   "dependencies": {
     "deep-assign": "^2.0.0",
-    "flat": "^2.0.0",
+    "es6-promise": "^3.2.1",
+    "flatnest": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.13.1",
     "material-ui": "^0.15.0",
     "moment": "^2.13.0",
-    "react": "^15.0.2",
+    "react": "15.1.0",
     "react-addons-css-transition-group": "^15.1.0",
-    "react-dom": "^15.0.2",
+    "react-dom": "15.0.1",
+    "react-dropzone-component": "^1.0.4",
     "react-intl": "2.1.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.4.0",

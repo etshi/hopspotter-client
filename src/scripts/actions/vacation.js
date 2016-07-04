@@ -12,6 +12,9 @@ export const RECEIVE_POST_VACATION = 'RECEIVE_POST_VACATION'
 export const FAILURE_POST_VACATION = 'FAILURE_POST_VACATION'
 
 export const UPDATE_VACATION = 'UPDATE_VACATION'
+export const UPDATE_HINTTEXT = 'UPDATE_HINTTEXT'
+export const CLEAR_HINTTEXT = 'CLEAR_HINTTEXT'
+
 
 export function fetchVacation(id) {
   return dispatch => {
@@ -101,5 +104,21 @@ export function updateVacation(vacation) {
     payload: {
       vacation
     }
+  }
+}
+
+
+export function updateHintText(text) {
+  return {
+    type: UPDATE_HINTTEXT,
+    payload: {
+      text
+    }
+  }
+}
+export function clearHintText() {
+  return {
+    type: CLEAR_HINTTEXT,
+    payload: ''
   }
 }

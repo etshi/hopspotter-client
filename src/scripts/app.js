@@ -10,6 +10,12 @@ import Routes from './routes'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
+
+// Fix for IE11 in combination with polyfill.io. For some reason polyfill.io was not
+// returning the promise polyfill in IE11. This enforces it.
+import promisePolyfill from 'es6-promise'
+promisePolyfill.polyfill()
+
 render(
   <Provider store={store}>
     <Routes {...store} />

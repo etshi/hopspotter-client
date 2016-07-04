@@ -6,6 +6,7 @@ import Button from 'material-ui/RaisedButton'
 import { fetchVacation, createVacation, updateVacation } from '../actions/vacation'
 
 import { pricingForm } from '../modules/forms'
+import { getToggleTemplate } from '../modules/formComponents'
 
 class pricing extends Component {
   constructor(props) {
@@ -25,6 +26,20 @@ class pricing extends Component {
       dispatch(createVacation(newVacation))
     }
   }
+  getOptions() {
+    return {
+      auto: 'placeholders',
+      fields: {
+        price: {
+          label: this.context.intl.formatMessage({id: 'labels.price'})
+        },
+        newsletter: {
+          label: this.context.intl.formatMessage({id: 'labels.newsletter'}),
+          template: getToggleTemplate({})
+        }
+      }
+    }
+  }
   render() {
     const {
       vacation
@@ -32,10 +47,11 @@ class pricing extends Component {
 
     return (
       <div>
-        <h1>Pricing</h1>
+        <h1>{this.context.intl.formatMessage({id: 'pricing.title'})}</h1>
         <form.Form
           ref='pricingForm'
           type={pricingForm}
+          options={this.getOptions()}
           value={vacation} />
         <Button label="Save" onClick={this.onSave} primary />
       </div>

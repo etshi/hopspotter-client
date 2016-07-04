@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import t from 'tcomb-form'
 import Chip from 'material-ui/Chip'
+import Avatar from 'material-ui/Avatar'
+import SvgIconFace from 'material-ui/svg-icons/action/face'
 import {blue300, grey300} from 'material-ui/styles/colors'
 
 class ButtonsList extends Component {
@@ -28,8 +30,6 @@ class ButtonsList extends Component {
     let value = this.props.options.selectOptions[index]
     let stateValue = this.state.value
     // if value in array remove it else add it and return the full array
-    console.log('ONCHANGE', stateValue.indexOf(value))
-
     if (stateValue.indexOf(value) !== -1) {
       stateValue.splice(stateValue.indexOf(value), 1)
     } else {
@@ -39,15 +39,28 @@ class ButtonsList extends Component {
     this.setState({ value: stateValue })
   }
   render() {
+    const styles = {
+      chip: {
+        margin: 4,
+        textAlign: 'center',
+        minWidth: '20%'
+      },
+      wrapper: {
+        display: 'flex',
+        flexWrap: 'wrap'
+      }
+    }
     return (
-      <div>
+      <div style={styles.wrapper}>
         {this.props.options.selectOptions &&
           this.props.options.selectOptions.map((option, index) => {
             return (
               <Chip
                 key={index}
+                style={styles.chip}
                 backgroundColor={(this.isActive(option))? blue300 : grey300 }
                 onTouchTap={() => this.onChange(index)} >
+                <Avatar backgroundColor={(this.isActive(option))? blue300 : grey300 } icon={<SvgIconFace />} />
                 {option}
               </Chip>
             )

@@ -16,7 +16,7 @@
   "vacationPeopleAmount": 20,
   "vacationFeatures": ["foods","accommodation"],
 
-  "images": [""],
+  "images": [],
   "video": "",
 
   "price": 400,

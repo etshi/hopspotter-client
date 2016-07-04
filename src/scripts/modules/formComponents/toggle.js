@@ -27,6 +27,7 @@ class ToggleComponent extends Component {
     return (
       <Toggle
         label={this.props.label}
+        labelStyle={{width: 'initial'}}
         defaultToggled={this.state.value}
         disabled={this.props.disabled}
         onToggle={ this.onChange }  />

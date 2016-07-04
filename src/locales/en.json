@@ -1,3 +1,77 @@
 {
-  "app": "Hopspotter Vacation portal"
+  "app": "Hopspotter Vacation portal",
+  "labels": {
+    "centerName": "t.Str",
+    "centerLocation": "t.Str",
+    "centerGettingThere": "t.Str",
+    "centerActivities": "t.list(t.String)",
+    "centerEnvironment": "t.list(t.String)",
+    "hasAccommodation": "t.Boolean",
+    "vacationTitle": "test",
+    "vacationSummary": "test",
+    "vacationExperience": "test",
+    "vacationSuitability": "test",
+    "vacationSeasonStartDate": "test",
+    "vacationSeasonEndDate": "test",
+    "vacationDuration": "test",
+    "vacationPeopleAmount": "test",
+    "vacationFeatures": "test",
+    "images":"images",
+    "video":"video",
+    "price":"price",
+    "newsletter":"newsletter"
+  },
+  "placeholders": {
+    "centerName": "centerName placeholder",
+    "vacationTitle": "vacationTitle placeholder",
+    "video": "youtube video"
+  },
+  "promptBox": {
+    "centerName": "centerName",
+    "centerLocation": "centerLocation",
+    "centerGettingThere": "centerGettingThere",
+    "centerActivities": "centerActivities",
+    "centerEnvironment": "centerEnvironment",
+    "hasAccommodation": "hasAccommodation"
+  },
+  "vacation": {
+    "title": "vacation form",
+    "vacationSuitability": {
+      "friends":"friends",
+      "singles":"singles",
+      "couples":"couples",
+      "family":"family"
+    },
+    "vacationExperience": {
+      "beginner": "beginner",
+      "intermediate": "intermediate",
+      "advanced": "advanced"
+    }
+  },
+  "center": {
+    "title": "center form",
+    "centerActivities": {
+      "surfing": "surfing",
+      "skiing": "skiing",
+      "yoga": "yoga",
+      "cycling": "cycling",
+      "scuba": "scuba",
+      "fitness": "fitness",
+      "climbing": "climbing"
+    },
+    "centerEnvironment": {
+      "mountain": "mountain",
+      "desert": "Desert",
+      "island": "island",
+      "forest": "forest"
+    }
+  },
+  "media": {
+    "title": "media form",
+    "mediaRulesTitle": "Media Rules",
+    "mediaRulestext": "kkkkk"
+  },
+  "pricing": {
+    "title": "pricing form"
+  }
 }

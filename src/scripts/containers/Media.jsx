@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react'
 import { form } from 'tcomb-form'
 import assign from 'deep-assign'
 import { connect } from 'react-redux'
+import { FormattedHTMLMessage } from 'react-intl'
 import Button from 'material-ui/RaisedButton'
 import { fetchVacation, createVacation, updateVacation } from '../actions/vacation'
+import { ReactDropzoneFactory } from '../modules/formComponents'
 
 import { mediaForm } from '../modules/forms'
 
@@ -19,10 +21,25 @@ class media extends Component {
   onSave() {
     const { dispatch, vacation } = this.props
     let newVacation = this.refs.mediaForm.getValue()
+    console.log(newVacation)
     if (newVacation) {
       newVacation = assign(vacation, newVacation)
       dispatch(updateVacation(newVacation))
       dispatch(createVacation(newVacation))
+    }
+  }
+  getOptions() {
+    return {
+      auto: 'placeholders',
+      fields: {
+        images: {
+          label: this.context.intl.formatMessage({id: 'labels.images'}),
+          factory: ReactDropzoneFactory
+        },
+        video: {
+          label: this.context.intl.formatMessage({id: 'labels.video'})
+        }
+      }
     }
   }
   render() {
@@ -32,10 +49,13 @@ class media extends Component {
 
     return (
       <div>
-        <h1>Add Media</h1>
+        <h1>{this.context.intl.formatMessage({id: 'media.title'})}</h1>
+        <h3>{this.context.intl.formatMessage({id: 'media.mediaRulesTitle'})}</h3>
+        <p style={{border: '1px solid black'}}><FormattedHTMLMessage id="media.mediaRulestext" /></p>
         <form.Form
-          ref='centerForm'
+          ref='mediaForm'
           type={mediaForm}
+          options={this.getOptions()}
           value={vacation} />
         <Button label="Save" onClick={this.onSave} primary />
       </div>
