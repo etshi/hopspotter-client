@@ -1,28 +1,24 @@
 export default {
-  'center': {
-    'centerName': '',
-    'centerPlace': '',
-    'howToGetThere': '',
-    'activities': [],
-    'environment': [],
-    'accomodation': false
-  },
-  'vacation': {
-    'vacationName': '',
-    'vacationDescribtion': '',
-    'vacationExperience': '',
-    'vacationSuitableFor': [],
-    'vacationDuration': '',
-    'vacationSpots': '',
-    'vacationIncluded': []
-  },
-  'media': {
-    'pictures': [],
-    'videos': ''
-  },
-  'pricing': {
-    'seasonStartDate': '',
-    'seasonEndDate': '',
-    'price': ''
-  }
+  'centerName': '',
+  'centerLocation': '',
+  'centerGettingThere': '',
+  'centerActivities': [],
+  'centerEnvironment': [],
+  'hasAccommodation': true,
+
+  'vacationTitle': '',
+  'vacationSummary': '',
+  'vacationExperience': [],
+  'vacationSuitability': [],
+  'vacationSeasonStartDate': new Date(),
+  'vacationSeasonEndDate': new Date(),
+  'vacationDuration': 0,
+  'vacationPeopleAmount': 0,
+  'vacationFeatures': [],
+
+  'images': [],
+  'video': '',
+
+  'price': 0,
+  'newsletter': true
 }

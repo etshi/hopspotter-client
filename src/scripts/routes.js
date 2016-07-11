@@ -8,20 +8,22 @@ import {
 import { syncHistoryWithStore } from 'react-router-redux'
 
 import App from './containers/App'
-import Center from './containers/Center'
-import Vacation from './containers/Vacation'
-import Media from './containers/Media'
-import Pricing from './containers/Pricing'
+import VacationList from './containers/VacationList'
+import * as Vacation from './containers/vacation'
 
 export default (store) => {
   return (
     <Router history={syncHistoryWithStore(hashHistory, store)}>
       <Route path="/" component={App}>
-        <IndexRedirect to="center" />
-        <Route path="center" component={Center} />
-        <Route path="vacation" component={Vacation} />
-        <Route path="media" component={Media} />
-        <Route path="pricing" component={Pricing} />
+        <Route path="list" component={VacationList} />
+        <Route path="vacation" component={Vacation.index}>
+          <Route path="center/:id" component={Vacation.CenterDetails} />
+          <Route path="vacation/:id" component={Vacation.VacationDetails} />
+          <Route path="media/:id" component={Vacation.MediaDetails} />
+          <Route path="pricing/:id" component={Vacation.PricingDetails} />
+          <IndexRedirect to="center/new" />
+        </Route>
+        <IndexRedirect to="list" />
       </Route>
     </Router>
   )

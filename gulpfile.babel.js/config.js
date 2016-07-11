@@ -67,6 +67,10 @@ module.exports = {
     lib: {
       src: LIB + '/*.js',
       dest: DEST + '/lib'
+    },
+    svg: {
+      src: SRC +  '/assets/svgs/*.svg',
+      dest: DEST + '/assets/svgs'
     }
   },
   browserify: {

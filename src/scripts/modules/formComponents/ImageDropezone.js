@@ -34,7 +34,7 @@ class ImageDropezone extends Component {
   }
   render() {
     const styles = {
-      
+
     }
     return (
       <div>
@@ -46,12 +46,16 @@ class ImageDropezone extends Component {
           eventHandlers={{addedfile: this.onAddfile, removedfile: this.onRemovefile}}
           djsConfig={{
             addRemoveLinks: true,
-            acceptedFiles: 'image/jpeg,image/png,image/gif'
+            acceptedFiles: 'image/jpeg,image/png,image/gif',
+            dictDefaultMessage: this.context.intl.formatMessage({id: 'dropzone.text'})
           }}
           action="#" />
       </div>
     )
   }
+}
+ImageDropezone.contextTypes = {
+  intl: PropTypes.object.isRequired
 }
 
 function imageDropezone(options) {return t.form.Form.templates.select.clone({

@@ -3,10 +3,10 @@ import { form } from 'tcomb-form'
 import assign from 'deep-assign'
 import { connect } from 'react-redux'
 import Button from 'material-ui/RaisedButton'
-import { fetchVacation, createVacation, updateVacation } from '../actions/vacation'
+import { fetchVacation, createVacation, clearVacation, updateVacation } from '../../actions/vacation'
 
-import { vacationForm } from '../modules/forms'
-import { ReactSelectFactory } from '../modules/formComponents'
+import { vacationForm } from '../../modules/forms'
+import { ReactSelectFactory, getInputIconTemplate, listTemplate, ReactDatePickerFactory } from '../../modules/formComponents'
 
 class vacation extends Component {
   constructor(props) {
@@ -14,20 +14,34 @@ class vacation extends Component {
     this.onSave = this.onSave.bind(this)
   }
   componentWillMount() {
+    const { vacation } = this.props
     const { dispatch } = this.props
-    dispatch(fetchVacation())
+
+    if (vacation.id) {
+      dispatch(fetchVacation(vacation.id))
+    } else {
+      dispatch(clearVacation())
+    }
   }
   onSave() {
     const { dispatch, vacation } = this.props
     let newVacation = this.refs.validationForm.getValue()
     if (newVacation) {
-      newVacation = assign(vacation, newVacation)
-      dispatch(updateVacation(newVacation))
+      newVacation.vacationSeasonStartDate = '' + newVacation.vacationSeasonStartDate
+      newVacation = assign({}, vacation, newVacation)
       dispatch(createVacation(newVacation))
+      dispatch(updateVacation(newVacation))
     }
   }
   getOptions() {
     const { dispatch } = this.props
+    const styles = {
+      icon: {
+        width: '30px',
+        height: 'auto'
+      }
+    }
+
     return {
       fields: {
         vacationTitle: {
@@ -60,19 +74,23 @@ class vacation extends Component {
           ]}
         },
         vacationSeasonStartDate: {
-          label: this.context.intl.formatMessage({id: 'labels.vacationSeasonStartDate'})
+          label: this.context.intl.formatMessage({id: 'labels.vacationSeasonStartDate'}),
+          factory: ReactDatePickerFactory
         },
         vacationSeasonEndDate: {
-          label: this.context.intl.formatMessage({id: 'labels.vacationSeasonEndDate'})
+          label: this.context.intl.formatMessage({id: 'labels.vacationSeasonEndDate'}),
+          factory: ReactDatePickerFactory
         },
         vacationDuration: {
           label: this.context.intl.formatMessage({id: 'labels.vacationDuration'})
         },
         vacationPeopleAmount: {
-          label: this.context.intl.formatMessage({id: 'labels.vacationPeopleAmount'})
+          label: this.context.intl.formatMessage({id: 'labels.vacationPeopleAmount'}),
+          template: getInputIconTemplate({icon: <img src="/assets/svgs/people.svg" style={styles.icon} />})
         },
         vacationFeatures: {
           label: this.context.intl.formatMessage({id: 'labels.vacationFeatures'}),
+          template: listTemplate,
           disableOrder: true
         }
       }

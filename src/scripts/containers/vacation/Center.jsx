@@ -1,18 +1,24 @@
 import React, { Component, PropTypes } from 'react'
-import { form } from 'tcomb-form'
+import t, { form } from 'tcomb-form'
 import assign from 'deep-assign'
 import { connect } from 'react-redux'
 import Button from 'material-ui/RaisedButton'
+import FontIcon from 'material-ui/FontIcon'
 import {
   fetchVacation,
   createVacation,
   updateVacation,
+  clearVacation,
   updateHintText,
   clearHintText
-} from '../actions/vacation'
+} from '../../actions/vacation'
 
-import { centerForm } from '../modules/forms'
-import { getToggleTemplate, ReactSelectFactory } from '../modules/formComponents'
+import { centerForm } from '../../modules/forms'
+import {
+  ReactSelectFactory,
+  getbooleanCheckboxTemplate,
+  getInputIconTemplate
+} from '../../modules/formComponents'
 
 class center extends Component {
   constructor(props) {
@@ -20,8 +26,14 @@ class center extends Component {
     this.onSave = this.onSave.bind(this)
   }
   componentWillMount() {
+    const { vacation } = this.props
     const { dispatch } = this.props
-    dispatch(fetchVacation())
+
+    if (vacation.id) {
+      dispatch(fetchVacation(vacation.id))
+    } else {
+      dispatch(clearVacation())
+    }
   }
   onSave() {
     const { dispatch, vacation } = this.props
@@ -35,6 +47,12 @@ class center extends Component {
   }
   getOptions() {
     const { dispatch } = this.props
+    const styles = {
+      icon: {
+        fontSize: '18px'
+      }
+    }
+
     return {
       fields: {
         centerName: {
@@ -53,7 +71,8 @@ class center extends Component {
           }
         },
         centerLocation: {
-          label: this.context.intl.formatMessage({id: 'labels.centerLocation'})
+          label: this.context.intl.formatMessage({id: 'labels.centerLocation'}),
+          template: getInputIconTemplate({icon: <FontIcon className="material-icons" style={styles.icon}>place</FontIcon>})
         },
         centerGettingThere: {
           label: this.context.intl.formatMessage({id: 'labels.centerGettingThere'}),
@@ -95,7 +114,7 @@ class center extends Component {
         },
         hasAccommodation: {
           label: this.context.intl.formatMessage({id: 'labels.hasAccommodation'}),
-          template: getToggleTemplate({})
+          template: getbooleanCheckboxTemplate({})
         }
       }
     }

@@ -12,7 +12,7 @@ class ButtonsList extends Component {
     this.isActive = this.isActive.bind(this)
 
     this.state = {
-      value: typeof props.value === 'undefined' ? [] : props.value
+      value: typeof props.value === 'undefined' ? [''] : props.value
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -20,7 +20,7 @@ class ButtonsList extends Component {
     // to clear the input value
     //console.log(nextProps.value)
     this.setState({
-      value: typeof nextProps.value === 'undefined' ? [] : nextProps.value
+      value: typeof nextProps.value === 'undefined' ? [''] : nextProps.value
     })
   }
   isActive(value) {
@@ -33,7 +33,7 @@ class ButtonsList extends Component {
     if (stateValue.indexOf(value) !== -1) {
       stateValue.splice(stateValue.indexOf(value), 1)
     } else {
-      stateValue.push(value)
+      stateValue = stateValue.concat([value])
     }
     this.props.onChange(stateValue)
     this.setState({ value: stateValue })
@@ -42,8 +42,10 @@ class ButtonsList extends Component {
     const styles = {
       chip: {
         margin: 4,
+        padding: '1rem',
         textAlign: 'center',
-        minWidth: '20%'
+        minWidth: '19%',
+        borderRadius: '3px'
       },
       wrapper: {
         display: 'flex',

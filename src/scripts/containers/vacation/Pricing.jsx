@@ -2,26 +2,30 @@ import React, { Component, PropTypes } from 'react'
 import { form } from 'tcomb-form'
 import assign from 'deep-assign'
 import { connect } from 'react-redux'
-import { FormattedHTMLMessage } from 'react-intl'
 import Button from 'material-ui/RaisedButton'
-import { fetchVacation, createVacation, updateVacation } from '../actions/vacation'
-import { ReactDropzoneFactory } from '../modules/formComponents'
+import { fetchVacation, createVacation, clearVacation, updateVacation } from '../../actions/vacation'
 
-import { mediaForm } from '../modules/forms'
+import { pricingForm } from '../../modules/forms'
+import { getmaterialCheckboxTemplate } from '../../modules/formComponents'
 
-class media extends Component {
+class pricing extends Component {
   constructor(props) {
     super(props)
     this.onSave = this.onSave.bind(this)
   }
   componentWillMount() {
+    const { vacation } = this.props
     const { dispatch } = this.props
-    dispatch(fetchVacation())
+
+    if (vacation.id) {
+      dispatch(fetchVacation(vacation.id))
+    } else {
+      dispatch(clearVacation())
+    }
   }
   onSave() {
     const { dispatch, vacation } = this.props
-    let newVacation = this.refs.mediaForm.getValue()
-    console.log(newVacation)
+    let newVacation = this.refs.pricingForm.getValue()
     if (newVacation) {
       newVacation = assign(vacation, newVacation)
       dispatch(updateVacation(newVacation))
@@ -32,12 +36,12 @@ class media extends Component {
     return {
       auto: 'placeholders',
       fields: {
-        images: {
-          label: this.context.intl.formatMessage({id: 'labels.images'}),
-          factory: ReactDropzoneFactory
+        price: {
+          label: this.context.intl.formatMessage({id: 'labels.price'})
         },
-        video: {
-          label: this.context.intl.formatMessage({id: 'labels.video'})
+        newsletter: {
+          label: this.context.intl.formatMessage({id: 'labels.newsletter'}),
+          template: getmaterialCheckboxTemplate({})
         }
       }
     }
@@ -49,12 +53,10 @@ class media extends Component {
 
     return (
       <div>
-        <h1>{this.context.intl.formatMessage({id: 'media.title'})}</h1>
-        <h3>{this.context.intl.formatMessage({id: 'media.mediaRulesTitle'})}</h3>
-        <p style={{border: '1px solid black'}}><FormattedHTMLMessage id="media.mediaRulestext" /></p>
+        <h1>{this.context.intl.formatMessage({id: 'pricing.title'})}</h1>
         <form.Form
-          ref='mediaForm'
-          type={mediaForm}
+          ref='pricingForm'
+          type={pricingForm}
           options={this.getOptions()}
           value={vacation} />
         <Button label="Save" onClick={this.onSave} primary />
@@ -62,11 +64,11 @@ class media extends Component {
     )
   }
 }
-media.propTypes = {
+pricing.propTypes = {
   dispatch: PropTypes.func.isRequired,
   vacation: PropTypes.object.isRequired
 }
-media.contextTypes = {
+pricing.contextTypes = {
   intl: PropTypes.object.isRequired
 }
 
@@ -76,4 +78,4 @@ function mapStateToProps(state) {
     vacation: vacation.vacation
   }
 }
-export default connect(mapStateToProps)(media)
+export default connect(mapStateToProps)(pricing)

@@ -10,7 +10,7 @@ import ImageWbIncandescent from 'material-ui/svg-icons/image/wb-incandescent'
 
 export const PromptBox = ({text, style}) => {
   return (
-    <div className="element-to-center" style={style}>
+    <div className="element-to-center hidden-sm hidden-xs" style={style}>
       {text &&
         <Card style={{border: `1px solid ${lightBlue200}`}}>
           <CardHeader avatar={<Avatar

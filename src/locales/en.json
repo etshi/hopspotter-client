@@ -4,7 +4,7 @@
     "centerName": "t.Str",
     "centerLocation": "t.Str",
     "centerGettingThere": "t.Str",
-    "centerActivities": "t.list(t.String)",
+    "centerActivities": "Alaa",
     "centerEnvironment": "t.list(t.String)",
     "hasAccommodation": "t.Boolean",
     "vacationTitle": "test",
@@ -19,12 +19,26 @@
     "images":"images",
     "video":"video",
     "price":"price",
-    "newsletter":"newsletter"
+    "newsletter":"newsletter",
+    "name": "name",
+    "email": "email",
+    "password": "password",
+    "confirmPassword": "confirm password",
+    "stayLoggedIn": "stayy logged in",
+    "logIn": "log in",
+    "register": "register"
   },
   "placeholders": {
     "centerName": "centerName placeholder",
     "vacationTitle": "vacationTitle placeholder",
-    "video": "youtube video"
+    "video": "youtube video",
+    "name": "name",
+    "email": "email",
+    "password": "password",
+    "confirmPassword": "confirm password",
+    "stayLoggedIn": "stayy logged in",
+    "logIn": "log in",
+    "register": "register"
   },
   "promptBox": {
     "centerName": "centerName",
@@ -73,5 +87,21 @@
   },
   "pricing": {
     "title": "pricing form"
+  },
+  "myVacations": {
+    "title": "My Vacations",
+    "edit": "edit this vacation",
+    "add": "Add vacation",
+    "center": "center",
+    "status": "status",
+    "welcomeText": "Hi ",
+    "noVacationsText": "noVacationsText"
+  },
+  "logIn": {
+    "logIn": "Log In",
+    "register": "Register"
+  },
+  "dropzone": {
+    "text": "Click here or Drop files here"
   }
 }
