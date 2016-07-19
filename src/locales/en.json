@@ -26,7 +26,8 @@
     "confirmPassword": "confirm password",
     "stayLoggedIn": "stayy logged in",
     "logIn": "log in",
-    "register": "register"
+    "register": "register",
+    "save": "save"
   },
   "placeholders": {
     "centerName": "centerName placeholder",
@@ -39,6 +40,11 @@
     "stayLoggedIn": "stayy logged in",
     "logIn": "log in",
     "register": "register"
+  },
+  "errors": {
+    "email": "Email must be of a valid format ex. test@test.com",
+    "passwordLength": "Invalid password, enter at least 6 chars",
+    "passwordMatch": "Passwords must match"
   },
   "promptBox": {
     "centerName": "centerName",
@@ -100,6 +106,10 @@
   "logIn": {
     "logIn": "Log In",
     "register": "Register"
+  },
+  "success": {
+    "title": "Vacation request submitted succesfully",
+    "text": "Vacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfullyVacation request submitted succesfully"
   },
   "dropzone": {
     "text": "Click here or Drop files here"

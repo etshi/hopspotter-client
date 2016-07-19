@@ -3,7 +3,8 @@ import { IntlProvider, FormattedMessage } from 'react-intl'
 import { connect } from 'react-redux'
 import { fetchMessages } from '../actions/intl'
 import {
-  getUserToken,
+  getExsistingUserAuthentication,
+  getNewUserAuthentication,
   restoreSession,
   discardSession
 } from '../actions/user'
@@ -36,17 +37,32 @@ class App extends Component {
       onUserRegister
     } = this.props
 
+    const styles = {
+      button: {
+        color: '#fff',
+        backgroundColor: '#FF6565',
+        borderRadius: '3px',
+        padding: '0.3rem'
+      }
+    }
+
     return messages && (
       <IntlProvider locale={locale} messages={messages}>
         <div>
           <Notifications />
           <AppBar
-            title={<FormattedMessage id="app" defaultMessage="OptioPay" />}
+            title={<FormattedMessage id="app" defaultMessage="Hopspotter" />}
             iconElementLeft={<span></span>}
-            iconElementRight={<Button label="+ Add vacation"
-              onClick={(name) => this.context.router.push({pathname: 'vacation'})} 
-              primary /> } />
-          {this.props.children}
+            iconElementRight={(true || user.isAuthenticated) ?
+              <Button label={<FormattedMessage id="myVacations.add" defaultMessage="Add vacation" />}
+                onClick={(name) => this.context.router.push({pathname: 'vacation'})}
+                backgroundColor={styles.button.backgroundColor}
+                labelColor={styles.button.color}
+                style={styles.button} />
+            : null } />
+              { (true || user.isAuthenticated) ? this.props.children
+                : <Login onUserLogin={onUserLogin} onRegister={onUserRegister} />
+              }
         </div>
       </IntlProvider>
     )
@@ -89,14 +105,14 @@ function mapDispatchToProps(dispatch) {
   return {
     fetchLocalesMessages: (locale) => dispatch(fetchMessages(locale)),
     restoreSession: () => dispatch(restoreSession()),
-    onUserLogin: (data) => dispatch(getUserToken({
-      username: data.email,
+    onUserLogin: (data) => dispatch(getExsistingUserAuthentication({
+      email: data.email,
       password: data.password
     })),
     onUserLogout: () => dispatch(discardSession()),
-    onUserRegister: (data) => dispatch(getUserToken({
+    onUserRegister: (data) => dispatch(getNewUserAuthentication({
       name: data.name,
-      username: data.email,
+      email: data.email,
       password: data.password
     }))
   }

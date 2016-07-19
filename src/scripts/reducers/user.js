@@ -18,7 +18,7 @@ function user(state = initialUserState, action = {}) {
       return Object.assign({}, state, {
         isAuthenticated: !!user,
         token: user ? user.token : '',
-        username: user ? user.username : ''
+        username: user ? user.email : ''
       })
     case REQUEST_AUTHENTICATION:
       return Object.assign({}, state, {
@@ -28,8 +28,8 @@ function user(state = initialUserState, action = {}) {
     case RECEIVE_AUTHENTICATION:
       return Object.assign({}, state, {
         isFetching: false,
-        isAuthenticated: action.payload && !!action.payload.token,
-        token: action.payload.token
+        isAuthenticated: action.payload && !!action.payload.authentication,
+        token: action.payload.authentication
       })
     case DISCARD_USER_SESSION:
       return Object.assign({}, state, {

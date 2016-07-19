@@ -27,12 +27,13 @@ class media extends Component {
   onSave() {
     const { dispatch, vacation } = this.props
     let newVacation = this.refs.mediaForm.getValue()
-    console.log(newVacation)
     if (newVacation) {
       newVacation = assign(vacation, newVacation)
-      dispatch(updateVacation(newVacation))
-      dispatch(createVacation(newVacation))
-    }
+      if(newVacation.id) {
+        dispatch(updateVacation(newVacation))
+      } else {
+        dispatch(createVacation(newVacation))
+      }     }
   }
   getOptions() {
     return {
@@ -52,6 +53,14 @@ class media extends Component {
     const {
       vacation
     } = this.props
+    const styles = {
+      button: {
+        color: '#fff',
+        backgroundColor: '#47B6BF',
+        borderRadius: '3px',
+        padding: '0.3rem'
+      }
+    }
 
     return (
       <div>
@@ -65,7 +74,10 @@ class media extends Component {
           type={mediaForm}
           options={this.getOptions()}
           value={vacation} />
-        <Button label="Save" onClick={this.onSave} primary />
+        <Button label={this.context.intl.formatMessage({id: 'labels.save'})} onClick={this.onSave}
+          backgroundColor={styles.button.backgroundColor}
+          labelColor={styles.button.color}
+          style={styles.button} />
       </div>
     )
   }

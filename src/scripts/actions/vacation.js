@@ -1,7 +1,8 @@
 import config from '../config'
 import { CALL_API } from 'redux-api-middleware'
+import { getUserSession } from './user'
 
-const apiUrl = '/fixtures/vacation.json'
+const apiUrl = `http://192.168.2.100:8080/api/users/${getUserSession().password}/vacations`
 
 export const REQUEST_VACATIONS = 'REQUEST_VACATIONS'
 export const RECEIVE_VACATIONS = 'RECEIVE_VACATIONS'
@@ -33,6 +34,7 @@ export function fetchVacations() {
       [CALL_API]: {
         endpoint: apiUrl,
         method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
         types: [
           {
             type: REQUEST_VACATIONS,
@@ -114,7 +116,6 @@ export function fetchVacation(id) {
 }
 
 export function createVacation(vacation) {
-  console.log("NEW VACATION ADDED: ", vacation)
   return {
     [CALL_API]: {
       endpoint: apiUrl,
@@ -137,6 +138,12 @@ export function createVacation(vacation) {
               message: 'Vacation saved!',
               dismiss: REQUEST_POST_VACATION
             }
+          },
+          payload: (action, state, res) => {
+            return res.json().then(json => {
+              console.log('response', json)
+              return json
+            })
           }
         }, {
           type: FAILURE_POST_VACATION,
@@ -153,11 +160,10 @@ export function createVacation(vacation) {
 }
 
 export function updateVacation(vacation) {
-  console.log("VACATION EDITED: ", vacation)
   return {
     [CALL_API]: {
       endpoint: apiUrl,
-      method: 'POST',
+      method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(vacation),
       types: [
@@ -176,6 +182,12 @@ export function updateVacation(vacation) {
               message: 'Vacation saved!',
               dismiss: REQUEST_PUT_VACATION
             }
+          },
+          payload: (action, state, res) => {
+            return res.json().then(json => {
+              console.log('response', json)
+              return json
+            })
           }
         }, {
           type: FAILURE_PUT_VACATION,

@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react' //eslint-disable-line no-unused-vars
 import { form } from 'tcomb-form'
-import { getUserToken } from '../actions/user'
 import { loginSchema, registerSchema } from '../schemas'
 // material-ui components
 import Button from 'material-ui/RaisedButton'
@@ -13,32 +12,29 @@ export default class Login extends Component {
     this.onRegister = this.onRegister.bind(this)
   }
   onLogin() {
-    console.log(this.refs)
     let login = this.refs.loginForm.getValue()
     console.log('onLogin', this.refs, login)
     if (login) {
-      this.props.onLogin(login)
+      this.props.onUserLogin(login)
     }
   }
   onRegister() {
     let register = this.refs.registerForm.getValue()
-    console.log('onRegister', this.refs, register)
     if (register && register.confirmPassword === register.password) {
       this.props.onRegister(register)
     }
   }
   getLoginOptions() {
     return {
+      auto: 'none',
       fields: {
         email: {
           type: 'email',
-          label: this.context.intl.formatMessage({id: 'labels.email'}),
           attrs: {
             placeholder: this.context.intl.formatMessage({id: 'placeholders.email'})
           }
         },
         password: {
-          label: this.context.intl.formatMessage({id: 'labels.password'}),
           attrs: {
             placeholder: this.context.intl.formatMessage({id: 'placeholders.password'})
           }
@@ -55,28 +51,31 @@ export default class Login extends Component {
   }
   getRegisterOptions() {
     return {
+      error: this.context.intl.formatMessage({id: 'errors.passwordMatch'}),
+      auto: 'none',
       fields: {
         name: {
-          label: this.context.intl.formatMessage({id: 'labels.name'}),
           attrs: {
             placeholder: this.context.intl.formatMessage({id: 'placeholders.name'})
           }
         },
         email: {
           type: 'email',
-          label: this.context.intl.formatMessage({id: 'labels.email'}),
+          error: this.context.intl.formatMessage({id: 'errors.email'}),
           attrs: {
             placeholder: this.context.intl.formatMessage({id: 'placeholders.email'})
           }
         },
         password: {
-          label: this.context.intl.formatMessage({id: 'labels.password'}),
+          type: 'password',
+          error: this.context.intl.formatMessage({id: 'errors.passwordLength'}),
           attrs: {
             placeholder: this.context.intl.formatMessage({id: 'placeholders.password'})
           }
         },
         confirmPassword: {
-          label: this.context.intl.formatMessage({id: 'labels.confirmPassword'}),
+          type: 'password',
+          error: this.context.intl.formatMessage({id: 'errors.passwordLength'}),
           attrs: {
             placeholder: this.context.intl.formatMessage({id: 'placeholders.confirmPassword'})
           }
@@ -104,7 +103,8 @@ export default class Login extends Component {
         color: '#fff',
         backgroundColor: '#47B6BF',
         borderRadius: '3px',
-        padding: '0.5rem'
+        padding: '0.5rem',
+        marginTop: '1rem'
       }
     }
     return (
@@ -115,23 +115,23 @@ export default class Login extends Component {
             ref='loginForm'
             type={loginSchema}
             options={this.getLoginOptions()} />
-          <Button label={this.context.intl.formatMessage({id: 'label.logIn'})}
+          <Button label={this.context.intl.formatMessage({id: 'labels.logIn'})}
             onClick={this.onLogin}
             backgroundColor={styles.button.backgroundColor}
             labelColor={styles.button.color}
             style={styles.button} />
         </div>
         <div className="col-sm-6" style={styles.register}>
-        <h1>{this.context.intl.formatMessage({id: 'logIn.register'})}</h1>
+          <h1>{this.context.intl.formatMessage({id: 'logIn.register'})}</h1>
           <form.Form
             ref='registerForm'
             options={this.getRegisterOptions()}
             type={registerSchema} />
-          <Button label={this.context.intl.formatMessage({id: 'label.register'})}
-           onClick={this.onRegister}
-           backgroundColor={styles.button.backgroundColor}
-           labelColor={styles.button.color}
-           style={styles.button} />
+          <Button label={this.context.intl.formatMessage({id: 'labels.register'})}
+            onClick={this.onRegister}
+            backgroundColor={styles.button.backgroundColor}
+            labelColor={styles.button.color}
+            style={styles.button} />
         </div>
       </div>
     )

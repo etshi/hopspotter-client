@@ -2,7 +2,7 @@ import config from '../config'
 import { CALL_API } from 'redux-api-middleware'
 
 // const { apiUrl } = config
-const apiUrl = '/fixtures/loginSuccess.json'
+const apiUrl = 'http://192.168.2.100:8080/api/user'
 
 export const REQUEST_AUTHENTICATION = 'REQUEST_AUTHENTICATION'
 export const RECEIVE_AUTHENTICATION = 'RECEIVE_AUTHENTICATION'
@@ -25,25 +25,54 @@ export function discardSession() {
   }
 }
 
-export function getUserAuthentication(payload = {}) {
+export function getNewUserAuthentication(payload = {}) {
   return {
     [CALL_API]: {
       endpoint: apiUrl,
-      headers: {
-        'Authorization': `Basic ${btoa(`${payload.username}:${payload.password}`)}`
-      },
-      method: 'GET',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
       types: [
         {
           type: REQUEST_AUTHENTICATION,
-          payload: { username: payload.username }
+          payload: { username: payload.email }
         },
         {
           type: RECEIVE_AUTHENTICATION,
           payload: (action, state, res) => {
-            const authentication = res.headers.get('Hopspotter-Authentication')
-            saveUserSession(state.user.username, authentication)
-            return { authentication: authentication }
+            return res.json().then(json => {
+              const authentication = json.token
+              saveUserSession(state.user.username, authentication)
+              return { authentication: authentication }
+            })
+          }
+        },
+        FAILURE_AUTHENTICATION
+      ]
+    }
+  }
+}
+
+export function getExsistingUserAuthentication(payload = {}) {
+  return {
+    [CALL_API]: {
+      endpoint: `${apiUrl}/token`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      types: [
+        {
+          type: REQUEST_AUTHENTICATION,
+          payload: { username: payload.email }
+        },
+        {
+          type: RECEIVE_AUTHENTICATION,
+          payload: (action, state, res) => {
+            return res.json().then(json => {
+              const authentication = json.token
+              saveUserSession(state.user.username, authentication)
+              return { authentication: authentication }
+            })
           }
         },
         FAILURE_AUTHENTICATION
@@ -59,7 +88,7 @@ function saveUserSession(username, authentication) {
   }
 }
 
-function getUserSession() {
+export function getUserSession() {
   let userInSession = sessionStorage.getItem('hsa')
   if (userInSession) {
     userInSession = userInSession.split(':')

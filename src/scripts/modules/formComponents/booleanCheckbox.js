@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import t from 'tcomb-form'
 import Checkbox from 'material-ui/Checkbox'
+import FontIcon from 'material-ui/FontIcon'
+import { grey300, lightBlue300} from 'material-ui/styles/colors'
 
 class BooleanCheckbox extends Component {
   constructor(props) {
@@ -42,11 +44,15 @@ class BooleanCheckbox extends Component {
           checked={this.state.value}
           disabled={this.props.disabled}
           onCheck={this.onChange}
+          checkedIcon={<FontIcon className="material-icons" color={lightBlue300}>check_box</FontIcon>}
+          uncheckedIcon={<FontIcon className="material-icons" color={grey300}>check_box_outline_blank</FontIcon>}
           style={styles.checkbox} />
         <Checkbox
           label="No"
           checked={!this.state.value}
           disabled={this.props.disabled}
+          checkedIcon={<FontIcon className="material-icons" color={lightBlue300}>check_box</FontIcon>}
+          uncheckedIcon={<FontIcon className="material-icons" color={grey300}>check_box_outline_blank</FontIcon>}
           onCheck={this.onChange}
           style={styles.checkbox} />
       </div>

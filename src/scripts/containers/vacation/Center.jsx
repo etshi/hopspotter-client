@@ -38,18 +38,24 @@ class center extends Component {
   onSave() {
     const { dispatch, vacation } = this.props
     let newVacation = this.refs.centerForm.getValue()
-    console.log('onSave',newVacation)
     if (newVacation) {
       newVacation = assign(vacation, newVacation)
-      dispatch(updateVacation(newVacation))
-      dispatch(createVacation(newVacation))
+      if(newVacation.id) {
+        dispatch(updateVacation(newVacation))
+      } else {
+        dispatch(createVacation(newVacation))
+      }
     }
   }
   getOptions() {
     const { dispatch } = this.props
     const styles = {
       icon: {
-        fontSize: '18px'
+        fontSize: '16px'
+      },
+      iconButtonList: {
+        width: '30px',
+        height: 'auto'
       }
     }
 
@@ -92,25 +98,44 @@ class center extends Component {
         centerEnvironment: {
           label: this.context.intl.formatMessage({id: 'labels.centerEnvironment'}),
           factory: ReactSelectFactory,
-          options: {selectOptions: [
-            this.context.intl.formatMessage({id: 'center.centerEnvironment.mountain'}),
-            this.context.intl.formatMessage({id: 'center.centerEnvironment.desert'}),
-            this.context.intl.formatMessage({id: 'center.centerEnvironment.island'}),
-            this.context.intl.formatMessage({id: 'center.centerEnvironment.forest'}),
-          ]}
+          options: {
+            selectOptions: [
+              this.context.intl.formatMessage({id: 'center.centerEnvironment.mountain'}),
+              this.context.intl.formatMessage({id: 'center.centerEnvironment.desert'}),
+              this.context.intl.formatMessage({id: 'center.centerEnvironment.island'}),
+              this.context.intl.formatMessage({id: 'center.centerEnvironment.forest'})
+            ],
+            selectIcons: [
+              <img src="/assets/svgs/mountain.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/desert.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/island.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/forest.svg" style={styles.iconButtonList} />
+            ]
+          }
         },
         centerActivities: {
           label: this.context.intl.formatMessage({id: 'labels.centerActivities'}),
           factory: ReactSelectFactory,
-          options: {selectOptions: [
-            this.context.intl.formatMessage({id: 'center.centerActivities.surfing'}),
-            this.context.intl.formatMessage({id: 'center.centerActivities.skiing'}),
-            this.context.intl.formatMessage({id: 'center.centerActivities.yoga'}),
-            this.context.intl.formatMessage({id: 'center.centerActivities.cycling'}),
-            this.context.intl.formatMessage({id: 'center.centerActivities.scuba'}),
-            this.context.intl.formatMessage({id: 'center.centerActivities.fitness'}),
-            this.context.intl.formatMessage({id: 'center.centerActivities.climbing'})
-          ]}
+          options: {
+            selectOptions: [
+              this.context.intl.formatMessage({id: 'center.centerActivities.surfing'}),
+              this.context.intl.formatMessage({id: 'center.centerActivities.skiing'}),
+              this.context.intl.formatMessage({id: 'center.centerActivities.yoga'}),
+              this.context.intl.formatMessage({id: 'center.centerActivities.cycling'}),
+              this.context.intl.formatMessage({id: 'center.centerActivities.scuba'}),
+              this.context.intl.formatMessage({id: 'center.centerActivities.fitness'}),
+              this.context.intl.formatMessage({id: 'center.centerActivities.climbing'})
+            ],
+            selectIcons: [
+              <img src="/assets/svgs/surfing.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/skiing.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/yoga.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/cycling.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/scuba.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/fitness.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/climbing.svg" style={styles.iconButtonList} />
+            ]
+          }
         },
         hasAccommodation: {
           label: this.context.intl.formatMessage({id: 'labels.hasAccommodation'}),
@@ -123,6 +148,14 @@ class center extends Component {
     const {
       vacation
     } = this.props
+    const styles = {
+      button: {
+        color: '#fff',
+        backgroundColor: '#47B6BF',
+        borderRadius: '3px',
+        padding: '0.3rem'
+      }
+    }
 
     return (
       <div>
@@ -132,7 +165,11 @@ class center extends Component {
           type={centerForm}
           value={vacation}
           options={this.getOptions()} />
-        <Button label="Save" onClick={this.onSave} primary />
+        <Button label={this.context.intl.formatMessage({id: 'labels.save'})}
+          onClick={this.onSave}
+          backgroundColor={styles.button.backgroundColor}
+          labelColor={styles.button.color}
+          style={styles.button} />
       </div>
     )
   }

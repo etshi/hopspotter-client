@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { List, ListItem } from 'material-ui/List'
 import Divider from 'material-ui/Divider'
 import { VacationCard } from '../components/VacationCard'
-import { fetchVacations } from '../actions/vacation'
+import { fetchVacations, selectVacationID } from '../actions/vacation'
 import RaisedButton from 'material-ui/RaisedButton'
 
 class vacationList extends Component {
@@ -16,11 +16,13 @@ class vacationList extends Component {
     const { dispatch } = this.props
     dispatch(fetchVacations())
   }
-  onEditVacation() {
-
+  onEditVacation(id) {
+    const { dispatch } = this.props
+    dispatch(selectVacationID(id))
+    this.context.router.push({pathname: `vacation/center/${id}`})
   }
   onAddVacation() {
-
+    this.context.router.push({pathname: 'vacation'})
   }
   render() {
     const {
@@ -50,27 +52,26 @@ class vacationList extends Component {
         padding: '0.3rem'
       }
     }
-
     return (
-      <div>
+      <div className="container">
         <h1>{this.context.intl.formatMessage({id: 'myVacations.title'})}</h1>
         { (vacations && vacations.length > 0) ? (
           <List style={styles.list}>
               {vacations.map( (vacation, index) =>{
-                <div>
+                return (<div>
                   <ListItem style={styles.listItem} disabled>
                     <VacationCard
-                      image={vacation.image}
-                      title={vacation.title}
-                      center={vacation.center}
-                      status={vacation.status}
+                      image={vacation.images[0]}
+                      title={vacation.vacationTitle}
+                      center={vacation.centerName}
+                      status={"In Progress"}
                       centerLabel={this.context.intl.formatMessage({id: 'myVacations.center'})}
                       statusLabel={this.context.intl.formatMessage({id: 'myVacations.status'})}
-                      onEdit={this.onEditVacation}
+                      onEdit={this.onEditVacation.bind(this, vacation.id)}
                       editLabel={this.context.intl.formatMessage({id: 'myVacations.edit'})} />
                   </ListItem>
                   { vacations.length!== index+1 && <Divider style={styles.divider} /> }
-                </div>
+                </div> )
               } )}
             </List> )
           : (<div>
@@ -93,13 +94,14 @@ vacationList.propTypes = {
   vacations: PropTypes.object.isRequired
 }
 vacationList.contextTypes = {
-  intl: PropTypes.object.isRequired
+  intl: PropTypes.object.isRequired,
+  router: React.PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
-  const { vacations, user } = state
+  const { vacation, user } = state
   return {
-    vacations: vacations,
+    vacations: vacation.vacations,
     name: user.name
   }
 }

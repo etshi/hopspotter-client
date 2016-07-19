@@ -43,9 +43,9 @@ class ButtonsList extends Component {
       chip: {
         margin: 4,
         padding: '1rem',
-        textAlign: 'center',
         minWidth: '19%',
-        borderRadius: '3px'
+        borderRadius: '3px',
+        justifyContent: 'center'
       },
       wrapper: {
         display: 'flex',
@@ -62,7 +62,8 @@ class ButtonsList extends Component {
                 style={styles.chip}
                 backgroundColor={(this.isActive(option))? blue300 : grey300 }
                 onTouchTap={() => this.onChange(index)} >
-                <Avatar backgroundColor={(this.isActive(option))? blue300 : grey300 } icon={<SvgIconFace />} />
+                {this.props.options.selectIcons && <Avatar backgroundColor={(this.isActive(option))? blue300 : grey300 }
+                  icon={this.props.options.selectIcons[index]} />}
                 {option}
               </Chip>
             )

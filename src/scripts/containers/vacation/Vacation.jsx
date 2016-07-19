@@ -27,14 +27,15 @@ class vacation extends Component {
     const { dispatch, vacation } = this.props
     let newVacation = this.refs.validationForm.getValue()
     if (newVacation) {
-      newVacation.vacationSeasonStartDate = '' + newVacation.vacationSeasonStartDate
-      newVacation = assign({}, vacation, newVacation)
-      dispatch(createVacation(newVacation))
-      dispatch(updateVacation(newVacation))
+      newVacation = assign({}, vacation, JSON.parse(JSON.stringify(newVacation)))
+      if(newVacation.id) {
+        dispatch(updateVacation(newVacation))
+      } else {
+        dispatch(createVacation(newVacation))
+      }
     }
   }
   getOptions() {
-    const { dispatch } = this.props
     const styles = {
       icon: {
         width: '30px',
@@ -57,11 +58,18 @@ class vacation extends Component {
         vacationExperience: {
           label: this.context.intl.formatMessage({id: 'labels.vacationExperience'}),
           factory: ReactSelectFactory,
-          options: {selectOptions: [
-            this.context.intl.formatMessage({id: 'vacation.vacationExperience.beginner'}),
-            this.context.intl.formatMessage({id: 'vacation.vacationExperience.intermediate'}),
-            this.context.intl.formatMessage({id: 'vacation.vacationExperience.advanced'})
-          ]}
+          options: {
+            selectOptions: [
+              this.context.intl.formatMessage({id: 'vacation.vacationExperience.beginner'}),
+              this.context.intl.formatMessage({id: 'vacation.vacationExperience.intermediate'}),
+              this.context.intl.formatMessage({id: 'vacation.vacationExperience.advanced'})
+            ],
+            selectIcons: [
+              <img src="/assets/svgs/beginner.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/intermediate.svg" style={styles.iconButtonList} />,
+              <img src="/assets/svgs/advanced.svg" style={styles.iconButtonList} />
+            ]
+          }
         },
         vacationSuitability: {
           label: this.context.intl.formatMessage({id: 'labels.vacationSuitability'}),
@@ -100,6 +108,14 @@ class vacation extends Component {
     const {
       vacation
     } = this.props
+    const styles = {
+      button: {
+        color: '#fff',
+        backgroundColor: '#47B6BF',
+        borderRadius: '3px',
+        padding: '0.3rem'
+      }
+    }
 
     return (
       <div>
@@ -109,7 +125,10 @@ class vacation extends Component {
           type={vacationForm}
           options={this.getOptions()}
           value={vacation} />
-        <Button label="Save" onClick={this.onSave} primary />
+        <Button label={this.context.intl.formatMessage({id: 'labels.save'})} onClick={this.onSave}
+          backgroundColor={styles.button.backgroundColor}
+          labelColor={styles.button.color}
+          style={styles.button} />
       </div>
     )
   }

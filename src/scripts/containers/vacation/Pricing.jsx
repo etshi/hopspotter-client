@@ -28,8 +28,11 @@ class pricing extends Component {
     let newVacation = this.refs.pricingForm.getValue()
     if (newVacation) {
       newVacation = assign(vacation, newVacation)
-      dispatch(updateVacation(newVacation))
-      dispatch(createVacation(newVacation))
+      if(newVacation.id) {
+        dispatch(updateVacation(newVacation))
+      } else {
+        dispatch(createVacation(newVacation))
+      }
     }
   }
   getOptions() {
@@ -50,6 +53,14 @@ class pricing extends Component {
     const {
       vacation
     } = this.props
+    const styles = {
+      button: {
+        color: '#fff',
+        backgroundColor: '#47B6BF',
+        borderRadius: '3px',
+        padding: '0.3rem'
+      }
+    }
 
     return (
       <div>
@@ -59,7 +70,10 @@ class pricing extends Component {
           type={pricingForm}
           options={this.getOptions()}
           value={vacation} />
-        <Button label="Save" onClick={this.onSave} primary />
+        <Button label={this.context.intl.formatMessage({id: 'labels.save'})} onClick={this.onSave}
+          backgroundColor={styles.button.backgroundColor}
+          labelColor={styles.button.color}
+          style={styles.button} />
       </div>
     )
   }

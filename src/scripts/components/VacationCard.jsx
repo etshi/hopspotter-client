@@ -35,6 +35,7 @@ export const VacationCard = ({image, title, center, status, onEdit, editLabel, c
       padding: '0.3rem'
     }
   }
+  
   return (
     <div style={styles.root}>
       <GridList
